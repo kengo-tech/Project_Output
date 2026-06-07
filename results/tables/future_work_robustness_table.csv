@@ -1,0 +1,7 @@
+holding_bars,holding_minutes,in_sample,out_of_sample,positive_in_both
+3,15,False,True,False
+6,30,True,True,True
+9,45,True,False,False
+12,60,True,False,False
+18,90,True,False,False
+24,120,True,False,False

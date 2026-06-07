@@ -1,0 +1,15 @@
+sample_split,signal_name,true_count,sample_size,signal_rate
+in_sample,downtrend_highvol_forced_cover_signal,34,16992,0.0020009416195856874
+in_sample,dhv_cvd_positive_signal,33,16992,0.001942090395480226
+in_sample,dhv_buy60_signal,25,16992,0.0014712806026365348
+in_sample,dhv_buy60_cvdpos_signal,25,16992,0.0014712806026365348
+in_sample,dhv_score4_signal,16,16992,0.0009416195856873823
+in_sample,dhv_score4_buy60_signal,10,16992,0.0005885122410546139
+in_sample,dhv_score4_buy60_cvdpos_signal,10,16992,0.0005885122410546139
+out_of_sample,downtrend_highvol_forced_cover_signal,25,8847,0.002825816661015033
+out_of_sample,dhv_cvd_positive_signal,22,8847,0.0024867186616932295
+out_of_sample,dhv_buy60_signal,19,8847,0.0021476206623714253
+out_of_sample,dhv_buy60_cvdpos_signal,17,8847,0.0019215553294902226
+out_of_sample,dhv_score4_signal,8,8847,0.0009042613315248107
+out_of_sample,dhv_score4_buy60_signal,6,8847,0.0006781959986436081
+out_of_sample,dhv_score4_buy60_cvdpos_signal,6,8847,0.0006781959986436081

@@ -1,0 +1,13 @@
+sample_split,signal_name,exit_label,cost_label,trades,win_rate,avg_net_return,median_net_return,total_return,avg_holding_bars,main_exit_reason
+out_of_sample,downtrend_normalvol_forced_cover_signal,fixed_12b,with_cost,7,0.7142857142857143,0.0029748787684191675,0.0008049595070795064,0.020819883048235344,12.0,fixed_12b_exit
+out_of_sample,downtrend_forced_cover_signal,fixed_12b,with_cost,18,0.5555555555555556,0.0010233883192182936,0.0006035867239119426,0.01826002610402533,12.0,fixed_12b_exit
+out_of_sample,downtrend_forced_cover_signal,fixed_6b,with_cost,18,0.4444444444444444,0.0006816926417748344,-0.0006467340801400205,0.012172617719359291,6.0,fixed_6b_exit
+out_of_sample,downtrend_normalvol_forced_cover_signal,fixed_6b,with_cost,7,0.5714285714285714,0.001076765223731496,0.0002580050484787495,0.007505342159498385,6.0,fixed_6b_exit
+out_of_sample,downtrend_highvol_forced_cover_signal,fixed_6b,with_cost,10,0.4,0.0006181904950317679,-0.0008199607879631802,0.00609012430953082,6.0,fixed_6b_exit
+out_of_sample,downtrend_highvol_forced_cover_signal,fixed_12b,with_cost,10,0.4,-0.000501153835656664,-0.00197188488123493,-0.005102714926719432,12.0,fixed_12b_exit
+out_of_sample,downtrend_highvol_forced_cover_signal,adaptive,with_cost,10,0.2,-0.0007140224057879278,-0.0013690365452806766,-0.0071726022682393475,2.5,false_squeeze
+out_of_sample,downtrend_normalvol_forced_cover_signal,adaptive,with_cost,7,0.14285714285714285,-0.0017103315941421585,-0.001371977855139627,-0.011919666971031084,2.7142857142857144,false_squeeze
+out_of_sample,downtrend_forced_cover_signal,adaptive,with_cost,18,0.16666666666666666,-0.0011422966211869733,-0.0014103859098153807,-0.020428031273650227,2.7777777777777777,false_squeeze
+out_of_sample,breakout_forced_cover_signal,fixed_12b,with_cost,65,0.2923076923076923,-0.0013567086334107692,-0.0012035826345056836,-0.08528402773674182,12.0,fixed_12b_exit
+out_of_sample,breakout_forced_cover_signal,fixed_6b,with_cost,75,0.30666666666666664,-0.001410475351704087,-0.0013020446888194251,-0.10097048296836753,6.0,fixed_6b_exit
+out_of_sample,breakout_forced_cover_signal,adaptive,with_cost,81,0.12345679012345678,-0.001750732922459532,-0.001940053722869183,-0.13257484019854238,3.234567901234568,false_squeeze

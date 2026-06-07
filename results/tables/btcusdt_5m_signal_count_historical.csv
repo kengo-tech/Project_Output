@@ -1,0 +1,9 @@
+signal_name,true_count,sample_size,signal_rate
+simple_breakout_signal,724,10833,0.06683282562540385
+breakout_forced_cover_signal,421,10833,0.03886273423797655
+current_short_squeeze_signal,249,10833,0.022985322625311548
+trend_filtered_short_squeeze_signal,156,10833,0.014400443090556632
+early_squeeze_candidate_signal,406,10833,0.037478076248499956
+downtrend_forced_cover_signal,65,10833,0.006000184621065264
+downtrend_normalvol_forced_cover_signal,28,10833,0.002584694913689652
+downtrend_highvol_forced_cover_signal,29,10833,0.0026770054463214252

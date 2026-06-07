@@ -1,0 +1,2 @@
+signal_name,forced_cover_bucket,events,avg_return,median_return,win_rate,avg_mfe,avg_mae,breakeven_cost,avg_return_minus_cost,cost_beating_avg,enough_events,candidate_bucket,bucket_type,buy_aggression_bucket,volume_shock_bucket,trend_regime,volatility_regime,trend_vol_bucket
+breakout_forced_cover_signal,,28,0.0013537722158916726,0.0010520093790664653,0.6785714285714286,0.003582832896857648,-0.0023251601969737318,0.0012,0.00015377221589167275,True,True,True,trend_vol_bucket,,,,,trend_down__normal_vol

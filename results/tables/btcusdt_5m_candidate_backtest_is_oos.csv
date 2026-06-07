@@ -1,0 +1,7 @@
+sample_split,signal_name,exit_label,cost_label,trades,win_rate,avg_net_return,median_net_return,total_return,avg_holding_bars,main_exit_reason
+in_sample,downtrend_highvol_forced_cover_signal,fixed_12b,with_cost,8,0.5,0.001386761777833848,-0.00029022133286513635,0.011041496134807538,12.0,fixed_12b_exit
+in_sample,downtrend_highvol_forced_cover_signal,fixed_6b,with_cost,9,0.3333333333333333,0.0010436519086364083,-0.00019625520018804398,0.009346091753461128,6.0,fixed_6b_exit
+in_sample,downtrend_highvol_forced_cover_signal,adaptive,with_cost,9,0.2222222222222222,-0.0007088113160387036,-0.0011733583242657711,-0.006380827329484751,4.666666666666667,false_squeeze
+out_of_sample,downtrend_highvol_forced_cover_signal,fixed_6b,with_cost,10,0.4,0.0006181904950317679,-0.0008199607879631802,0.00609012430953082,6.0,fixed_6b_exit
+out_of_sample,downtrend_highvol_forced_cover_signal,fixed_12b,with_cost,10,0.4,-0.000501153835656664,-0.00197188488123493,-0.005102714926719432,12.0,fixed_12b_exit
+out_of_sample,downtrend_highvol_forced_cover_signal,adaptive,with_cost,10,0.2,-0.0007140224057879278,-0.0013690365452806766,-0.0071726022682393475,2.5,false_squeeze

@@ -1,0 +1,6 @@
+signal_name,true_count,sample_size,signal_rate
+simple_breakout_signal,59,1000,0.059
+breakout_forced_cover_signal,30,1000,0.03
+current_short_squeeze_signal,20,1000,0.02
+trend_filtered_short_squeeze_signal,14,1000,0.014
+early_squeeze_candidate_signal,10,1000,0.01

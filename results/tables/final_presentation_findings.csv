@@ -1,0 +1,7 @@
+sample_split,finding,value,comment
+in_sample,Candidate strategy fixed 6-bar result,Positive after cost,Use this as evidence of robustness only if both in-sample and out-of-sample are positive.
+in_sample,Trade count,9,Small trade count means statistical confidence is limited.
+in_sample,Average net return after cost,0.0010436519086364083,This is the main metric for the candidate strategy.
+out_of_sample,Candidate strategy fixed 6-bar result,Positive after cost,Use this as evidence of robustness only if both in-sample and out-of-sample are positive.
+out_of_sample,Trade count,10,Small trade count means statistical confidence is limited.
+out_of_sample,Average net return after cost,0.0006181904950317679,This is the main metric for the candidate strategy.

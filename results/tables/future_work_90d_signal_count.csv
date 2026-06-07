@@ -1,0 +1,3 @@
+sample_split,signal_name,true_count,sample_size,signal_rate
+in_sample,downtrend_highvol_forced_cover_signal,34,16992,0.0020009416195856874
+out_of_sample,downtrend_highvol_forced_cover_signal,25,8840,0.002828054298642534

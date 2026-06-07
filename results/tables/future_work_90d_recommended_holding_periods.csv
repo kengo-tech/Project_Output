@@ -1,0 +1,1 @@
+sample_split,signal_name,holding_bars,holding_minutes,cost_label,trades,win_rate,avg_net_return,median_net_return,std_net_return,q10_net_return,q25_net_return,q75_net_return,q90_net_return,best_trade,worst_trade,profit_factor,max_drawdown,total_return,positive_in_both

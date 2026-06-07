@@ -1,0 +1,9 @@
+sample_split,signal_name,true_count,sample_size,signal_rate
+in_sample,breakout_forced_cover_signal,295,7200,0.04097222222222222
+in_sample,downtrend_forced_cover_signal,37,7200,0.005138888888888889
+in_sample,downtrend_normalvol_forced_cover_signal,19,7200,0.002638888888888889
+in_sample,downtrend_highvol_forced_cover_signal,11,7200,0.0015277777777777779
+out_of_sample,breakout_forced_cover_signal,126,3650,0.03452054794520548
+out_of_sample,downtrend_forced_cover_signal,28,3650,0.007671232876712329
+out_of_sample,downtrend_normalvol_forced_cover_signal,9,3650,0.002465753424657534
+out_of_sample,downtrend_highvol_forced_cover_signal,18,3650,0.004931506849315068
