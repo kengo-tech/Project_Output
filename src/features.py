@@ -120,6 +120,7 @@ def make_features(
             ma_3h=lambda x: x["close"].shift(1).rolling(36).mean(),
             ma_6h=lambda x: x["close"].shift(1).rolling(72).mean(),
             above_ma_6h=lambda x: x["close"] > x["ma_6h"],
+            downtrend_ma_6h=lambda x: x["close"] < x["ma_6h"],
             trend_up_6h=lambda x: x["return_6h"] > 0,
         )
     )
@@ -134,6 +135,9 @@ def make_features(
             distance_to_rolling_high_24=lambda x: (
                 x["close"] / x["rolling_high_24"] - 1
             ),
+            reclaim_strength_12=lambda x: (
+                x["close"] / x["rolling_high_12"] - 1
+            ),
             near_rolling_high_12=lambda x: (
                 (x["close"] >= x["rolling_high_12"] * (1 - near_high_threshold))
                 & (x["close"] <= x["rolling_high_12"])
@@ -142,6 +146,8 @@ def make_features(
                 (x["close"] >= x["rolling_high_24"] * (1 - near_high_threshold))
                 & (x["close"] <= x["rolling_high_24"])
             ),
+            no_new_low_12=lambda x: x["low"] > x["rolling_low_12"],
+            no_new_low_24=lambda x: x["low"] > x["rolling_low_24"],
         )
     )
 
@@ -198,6 +204,9 @@ def make_features(
         .assign(
             cvd_slope_15m=lambda x: x["cvd_15m"] - x["cvd_15m"].shift(1),
             cvd_slope_30m=lambda x: x["cvd_30m"] - x["cvd_30m"].shift(1),
+            cvd_slope_60m=lambda x: x["cvd_60m"] - x["cvd_60m"].shift(1),
+            rolling_cvd_change_15m=lambda x: x["cvd"] - x["cvd"].shift(3),
+            rolling_cvd_change_60m=lambda x: x["cvd"] - x["cvd"].shift(12),
             cvd_slope_improving=lambda x: (
                 x["cvd_slope_15m"] > x["cvd_slope_15m"].shift(1)
             ),
@@ -217,11 +226,17 @@ def make_features(
             taker_buy_volume_30m=lambda x: (
                 x["taker_buy_base_volume"].rolling(6).sum()
             ),
+            taker_buy_volume_60m=lambda x: (
+                x["taker_buy_base_volume"].rolling(12).sum()
+            ),
             taker_sell_volume_15m=lambda x: (
                 x["taker_sell_base_volume"].rolling(3).sum()
             ),
             taker_sell_volume_30m=lambda x: (
                 x["taker_sell_base_volume"].rolling(6).sum()
+            ),
+            taker_sell_volume_60m=lambda x: (
+                x["taker_sell_base_volume"].rolling(12).sum()
             ),
         )
         .assign(
@@ -266,13 +281,40 @@ def make_features(
                 x["taker_buy_volume_30m"] / x["volume_30m"],
                 np.nan,
             ),
+            buy_aggression_ratio_60m=lambda x: np.where(
+                x["volume_60m"] > 0,
+                x["taker_buy_volume_60m"] / x["volume_60m"],
+                np.nan,
+            ),
             sell_aggression_ratio_30m=lambda x: np.where(
                 x["volume_30m"] > 0,
                 x["taker_sell_volume_30m"] / x["volume_30m"],
                 np.nan,
             ),
+            sell_aggression_ratio_60m=lambda x: np.where(
+                x["volume_60m"] > 0,
+                x["taker_sell_volume_60m"] / x["volume_60m"],
+                np.nan,
+            ),
+            sell_pressure_60m=lambda x: np.where(
+                x["volume_60m"] > 0,
+                (
+                    x["taker_sell_volume_60m"]
+                    - x["taker_buy_volume_60m"]
+                )
+                / x["volume_60m"],
+                np.nan,
+            ),
+            anchored_cvd_60m=lambda x: x["cvd"] - x["cvd"].shift(12),
         )
         .assign(
+            sell_pressure_60m_zscore=lambda x: (
+                (
+                    x["sell_pressure_60m"]
+                    - x["sell_pressure_60m"].shift(1).rolling(288, min_periods=50).mean()
+                )
+                / x["sell_pressure_60m"].shift(1).rolling(288, min_periods=50).std()
+            ),
             buy_aggression_improving=lambda x: (
                 x["buy_aggression_ratio_15m"]
                 > x["buy_aggression_ratio_15m"].shift(1)
@@ -333,7 +375,13 @@ def make_features(
             short_build_up=lambda x: (
                 x["sell_absorption_signal"]
                 | x["sell_aggression_absorption_signal"]
-            )
+            ),
+            seller_exhaustion_setup_signal=lambda x: (
+                x["downtrend_ma_6h"]
+                & (x["cvd_30m"] <= 0)
+                & (x["return_30m"] >= -0.0015)
+                & x["no_new_low_12"]
+            ),
         )
     )
 
@@ -343,6 +391,7 @@ def make_features(
         .assign(
             squeeze_trigger_12=lambda x: x["close"] > x["rolling_high_12"],
             squeeze_trigger_24=lambda x: x["close"] > x["rolling_high_24"],
+            reclaim_breakout_12=lambda x: x["close"] > x["rolling_high_12"],
         )
     )
 
@@ -415,6 +464,60 @@ def make_features(
                 & x["buy_aggression_improving"]
                 & (x["forced_cover_score"] >= 2)
                 & (~x["extreme_vol_flag"])
+            ),
+            downtrend_exhaustion_reclaim_signal=lambda x: (
+                x["downtrend_ma_6h"]
+                & x["no_new_low_12"]
+                & x["squeeze_trigger_12"]
+                & (x["forced_cover_score"] >= 3)
+                & (x["buy_aggression_ratio_15m"] >= 0.58)
+                & (x["cvd_slope_15m"] > 0)
+                & (x["volume_shock_15m"] >= 1.20)
+                & (x["vol_percentile"] >= 0.50)
+                & (x["vol_percentile"] < 0.95)
+            ),
+            downtrend_exhaustion_reclaim_ret30_signal=lambda x: (
+                x["downtrend_exhaustion_reclaim_signal"]
+                & (x["return_30m"] > -0.002)
+            ),
+            downtrend_exhaustion_reclaim_strength_signal=lambda x: (
+                x["downtrend_exhaustion_reclaim_signal"]
+                & (x["reclaim_strength_12"] >= 0.0003)
+            ),
+            downtrend_exhaustion_reclaim_wick_signal=lambda x: (
+                x["downtrend_exhaustion_reclaim_signal"]
+                & (x["lower_wick_ratio"] >= 0.10)
+            ),
+            absorption_flag=lambda x: (
+                (x["sell_pressure_60m"] > 0.10)
+                & (x["return_60m"] > -0.003)
+            ),
+            cvd_flip_15m=lambda x: (
+                (x["cvd_slope_15m"] > 0)
+                & (x["cvd_slope_60m"] < 0)
+            ),
+            cvd_flip_recent_3=lambda x: (
+                x["cvd_flip_15m"]
+                .astype(float)
+                .shift(1)
+                .rolling(3)
+                .max()
+                .fillna(0)
+                .astype(bool)
+            ),
+            seller_advantage_break_signal=lambda x: (
+                x["downtrend_ma_6h"]
+                & x["absorption_flag"]
+                & x["cvd_flip_15m"]
+                & x["reclaim_breakout_12"]
+                & (x["buy_aggression_ratio_15m"] > 0.55)
+            ),
+            seller_advantage_break_recent3_signal=lambda x: (
+                x["downtrend_ma_6h"]
+                & x["absorption_flag"]
+                & x["cvd_flip_recent_3"]
+                & x["reclaim_breakout_12"]
+                & (x["buy_aggression_ratio_15m"] > 0.55)
             ),
         )
     )
